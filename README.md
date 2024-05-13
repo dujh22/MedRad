@@ -85,7 +85,7 @@ MedRad.handle_medical_record(medical_record)
 ## 贡献
 
 代码部分由Jinhua DU完成，数据来源涉及清华大学OpenDE团队。
-
+```
 @misc{du24medrad,
 author = {Jinhua Du},
 title = {MedRad: A Framework for Reliable Assisted Decision Making in a Medical LargeLanguage Model},
@@ -94,4 +94,5 @@ publisher = {GitHub},
 journal = {GitHub repository},
 howpublished = {\url{https://github.com/dujh22/MedRad}}
 }
+```
 
