@@ -1,0 +1,1 @@
+base_model_path = "/home/djh/code/RAG_news/Baichuan-13B-Chat"
