@@ -1,66 +1,79 @@
-# MedRad:一个医学大模型的可靠辅助决策框架
+# 🏥 MedRad: LLMs驱动的可靠临床决策框架
 
-## 简介
+<div align="center">
+  <img src="https://img.shields.io/badge/python-3.11-blue" alt="Python Version">
+  <img src="https://img.shields.io/badge/pytorch-2.6.0-orange" alt="PyTorch Version">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+</div>
 
-MedRad是一个先进的医学决策辅助系统，旨在应对医学领域数据的迅速增长和临床决策的复杂性。它结合了大型语言模型、知识工程、Chain of Thought (CoT) 推理、Retrieval-Augmented Generation (RAG) 技术和智能代理，以提升医疗决策的准确性和可靠性。本框架专为不同复杂度的医学场景设计，如医学知识问答、门诊对话和临床病历诊断。
+## 🌟 项目亮点
 
-## 特点
+MedRad是一个革命性的医学决策辅助系统，它就像一位经验丰富的医生助手，能够：
 
-- **集成先进技术**：结合了大型语言模型、知识工程等多种技术。
-- **高可靠性决策**：专为提供高质量的医学决策路径而设计。
-- **灵活适应性**：适用于多种不同的医学应用场景。
-- **易于集成**：通过松耦合设计，易于与其他系统集成。
+- 🧠 智能分析：结合大语言模型和专业知识
+- 🎯 精准诊断：提供可靠的医学决策建议
+- 🔄 灵活应用：适用于多种医疗场景
+- 🔌 便捷集成：轻松对接现有系统
 
-## 安装
+## 🚀 快速开始
 
-1. 请先到[基座模型百川2网址](https://huggingface.co/baichuan-inc/Baichuan2-13B-Chat/tree/main)下载全部模型bin文件到Baichuan-13B-Chat文件夹内，或者到[AiMed网址](https://github.com/dujh22/AiMed.git)下载全部模型bin文件到Baichuan-13B-Chat（如果不修改代码中的文件夹路径参数的话）文件夹内
-   同时到[shibing624/text2vec-base-chinese-paraphrase](https://huggingface.co/shibing624/text2vec-base-chinese-paraphrase)下载文本嵌入模型到text2vec-base-chinese-paraphrase文件夹内
+### 1️⃣ 环境准备
 
-2. python选用3.11.5(3.11均可)
+首先，让我们准备必要的模型文件：
 
-3. 安装pytorch
+```bash
+# 下载基座模型
+git clone https://huggingface.co/baichuan-inc/Baichuan2-13B-Chat
+# 或访问 https://github.com/dujh22/AiMed.git
 
-假设本地机器CUDA版本最高支持为11.7, 我们希望尽可能安装可支持的最新的pytorch版本，比如2.0.1，具体下载命令参照：https://pytorch.org/get-started/previous-versions/
-
-```shell
-conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia
+# 下载文本嵌入模型
+git clone https://huggingface.co/shibing624/text2vec-base-chinese-paraphrase
 ```
 
-4. 推理前请安装依赖：
+### 2️⃣ 安装依赖
 
-```shell
+```bash
+# 安装PyTorch（根据您的CUDA版本选择合适的命令）
+pip3 install torch torchvision torchaudio
+
+# 安装项目依赖
 pip install -r requirements.txt
 ```
 
-## 项目构成说明
+### 3️⃣ 启动服务
 
-| 名称                                                         | 用途                                                         |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Baichuan-13B-Chat文件夹，text2vec-base-chinese-paraphrase文件夹 | 包括项目使用的各种模型的参数数据                             |
-| data文件夹                                                   | 包括项目使用的原始数据和处理后的数据，test_data是测试用数据  |
-| utils文件夹                                                  | 一些数据处理用脚本                                           |
-| openai_api.py                                                | 按照openai标准实现的baichuan流式访问接口，需要最先独立启动：python openai_api.py |
-| word_similarity.py                                           | 针对词类型的检索实现的相关算法                               |
-| sentence_similarit.py                                        | 针对句子或者篇章类型的检索实现的相关算法                     |
-| BaseOnly.py                                                  | 统一对数据的读取、对模型的读取                               |
-| search.py                                                    | 大模型调用所有检索算法的中间件                               |
-| QAexamAgent.py                                               | 医学知识问答Agent（LLM+RAG+CoT实现）                         |
-| MedicalAgent.py                                              | 门诊医患对话Agent（LLM+RAG+CoT实现）                         |
-| ClinicalDiagnosisAgent.py                                    | 临床病历诊断Agent（LLM+RAG+CoT实现）                         |
-| MedRad.py                                                    | MedRad框架整体Agent                                          |
+启动前，请先修改MedRad/config.py文件中的基座模型路径到所在的文件夹
 
-## 快速开始
+```bash
+# 启动API服务
+python openai_api.py
+```
 
-提供一个简单的例子来展示如何使用MedRad进行基本的任务。
+### 4️⃣ 本地调用
+
+```bash
+python MedRad.py
+```
+
+测试数据位于 `data/test_data/` 目录下，包含：
+
+- 医学知识问答测试集
+- 门诊对话测试集
+- 临床诊断测试集
+
+## 💡 使用示例
+
+除去MedRad.py的实现方式，您也可以直接使用MedRad框架进行二次开发：
+
+### 医学知识问答
 
 ```python
 import MedRad
 
-# 创建MedRad_Agent实例
-MedRad = MedRad_Agent()
+# 创建助手实例
+medrad = MedRad_Agent()
 
-# 使用MedRad_Agent处理不同类型的请求
-# QAexamAgent 示例
+# 进行医学知识问答
 query = {
     "QU": "Naglers反应表现为",
     "OP": {
@@ -70,17 +83,56 @@ query = {
         "D": "败血症梭菌"
     }
 }
-MedRad.handle_query(query)
-
-# MedicalAgent 示例
-complaint = "头疼该怎么办"
-MedRad.handle_outpatient_consultation(complaint)
-
-# ClinicalDiagnosisAgent 示例
-# 这里需要替换为具体的病历数据
-medical_record = "临床病历数据"
-MedRad.handle_medical_record(medical_record)
+medrad.handle_query(query)
 ```
 
-## 贡献
-代码部分由Jinhua DU完成，数据来源涉及清华大学OpenDE团队。
+### 门诊咨询
+
+```python
+# 处理患者主诉
+complaint = "头疼该怎么办"
+medrad.handle_outpatient_consultation(complaint)
+```
+
+### 临床诊断
+
+```python
+# 分析临床病历
+medical_record = "临床病历数据"
+medrad.handle_medical_record(medical_record)
+```
+
+## 📁 项目结构
+
+```
+MedRad/
+├── Baichuan-13B-Chat/          # 基座模型文件
+├── text2vec-base-chinese-paraphrase/  # 文本嵌入模型
+├── data/                       # 数据文件夹
+│   └── test_data/             # 测试数据
+├── utils/                      # 工具脚本
+├── openai_api.py              # API服务
+├── word_similarity.py         # 词语相似度算法
+├── sentence_similarity.py     # 句子相似度算法
+├── BaseOnly.py                # 基础功能实现
+├── search.py                  # 检索中间件
+├── QAexamAgent.py            # 医学知识问答Agent
+├── MedicalAgent.py           # 门诊对话Agent
+├── ClinicalDiagnosisAgent.py # 临床诊断Agent
+└── MedRad.py                 # 主框架
+```
+
+## 🤝 贡献指南
+
+欢迎加入我们的开发团队！如果您有任何想法或改进建议，请随时提交Issue或Pull Request。
+
+## 📝 致谢
+
+- 代码开发：Jinhua DU
+- 数据支持：清华大学OpenDE团队
+
+---
+
+<div align="center">
+  <p>让AI为医疗决策保驾护航</p>
+</div>

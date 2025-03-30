@@ -11,12 +11,12 @@ from typing import List, Literal, Optional, Union
 from sse_starlette.sse import EventSourceResponse
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from config import base_model_path
 
 # 模型基座
-model_path = "/home/djh/code/RAG_news/Baichuan-13B-Chat"
+model_path = base_model_path
 tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(model_path, device_map="cuda:2", torch_dtype=torch.float16,
-                                             trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto", torch_dtype=torch.float16, trust_remote_code=True)
 model.eval()
 
 
