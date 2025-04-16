@@ -1,4 +1,4 @@
-# 🏥 MedRad: LLMs驱动的可靠临床决策框架
+# 🏥 MedRad: LLM-Driven Reliable Clinical Decision Framework
 
 <div align="center">
   <img src="https://img.shields.io/badge/python-3.11-blue" alt="Python Version">
@@ -6,133 +6,133 @@
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
 </div>
 
-## 🌟 项目亮点
+## 🌟 Key Features
 
-MedRad是一个革命性的医学决策辅助系统，它就像一位经验丰富的医生助手，能够：
+MedRad is a revolutionary medical decision support system that acts as an experienced medical assistant, capable of:
 
-- 🧠 智能分析：结合大语言模型和专业知识
-- 🎯 精准诊断：提供可靠的医学决策建议
-- 🔄 灵活应用：适用于多种医疗场景
-- 🔌 便捷集成：轻松对接现有系统
+- 🧠 Intelligent Analysis: Combining large language models with professional knowledge
+- 🎯 Precise Diagnosis: Providing reliable medical decision recommendations
+- 🔄 Flexible Application: Suitable for various medical scenarios
+- 🔌 Easy Integration: Seamlessly connecting with existing systems
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 1️⃣ 环境准备
+### 1️⃣ Environment Setup
 
-首先，让我们准备必要的模型文件：
+First, let's prepare the necessary model files:
 
 ```bash
-# 下载基座模型
+# Download base model
 git clone https://huggingface.co/baichuan-inc/Baichuan2-13B-Chat
-# 或访问 https://github.com/dujh22/AiMed.git
+# or visit https://github.com/dujh22/AiMed.git
 
-# 下载文本嵌入模型
+# Download text embedding model
 git clone https://huggingface.co/shibing624/text2vec-base-chinese-paraphrase
 ```
 
-### 2️⃣ 安装依赖
+### 2️⃣ Install Dependencies
 
 ```bash
-# 安装PyTorch（根据您的CUDA版本选择合适的命令）
+# Install PyTorch (choose the appropriate command based on your CUDA version)
 pip3 install torch torchvision torchaudio
 
-# 安装项目依赖
+# Install project dependencies
 pip install -r requirements.txt
 ```
 
-### 3️⃣ 启动服务
+### 3️⃣ Start Service
 
-启动前，请先修改MedRad/config.py文件中的基座模型路径到所在的文件夹
+Before starting, please modify the base model path in MedRad/config.py to point to the correct folder
 
 ```bash
-# 启动API服务
+# Start API service
 python openai_api.py
 ```
 
-### 4️⃣ 本地调用
+### 4️⃣ Local Usage
 
 ```bash
 python MedRad.py
 ```
 
-测试数据位于 `data/test_data/` 目录下，包含：
+Test data is located in the `data/test_data/` directory, including:
 
-- 医学知识问答测试集
-- 门诊对话测试集
-- 临床诊断测试集
+- Medical knowledge Q&A test set
+- Outpatient dialogue test set
+- Clinical diagnosis test set
 
-## 💡 使用示例
+## 💡 Usage Examples
 
-除去MedRad.py的实现方式，您也可以直接使用MedRad框架进行二次开发：
+Besides the implementation in MedRad.py, you can also directly use the MedRad framework for secondary development:
 
-### 医学知识问答
+### Medical Knowledge Q&A
 
 ```python
 import MedRad
 
-# 创建助手实例
+# Create assistant instance
 medrad = MedRad_Agent()
 
-# 进行医学知识问答
+# Perform medical knowledge Q&A
 query = {
-    "QU": "Naglers反应表现为",
+    "QU": "Nagler's reaction is characterized by",
     "OP": {
-        "A": "破伤风梭菌",
-        "B": "肉毒杆菌",
-        "C": "产气荚膜梭菌",
-        "D": "败血症梭菌"
+        "A": "Clostridium tetani",
+        "B": "Clostridium botulinum",
+        "C": "Clostridium perfringens",
+        "D": "Clostridium septicum"
     }
 }
 medrad.handle_query(query)
 ```
 
-### 门诊咨询
+### Outpatient Consultation
 
 ```python
-# 处理患者主诉
-complaint = "头疼该怎么办"
+# Handle patient complaints
+complaint = "What should I do about my headache"
 medrad.handle_outpatient_consultation(complaint)
 ```
 
-### 临床诊断
+### Clinical Diagnosis
 
 ```python
-# 分析临床病历
-medical_record = "临床病历数据"
+# Analyze clinical records
+medical_record = "Clinical record data"
 medrad.handle_medical_record(medical_record)
 ```
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 MedRad/
-├── Baichuan-13B-Chat/          # 基座模型文件
-├── text2vec-base-chinese-paraphrase/  # 文本嵌入模型
-├── data/                       # 数据文件夹
-│   └── test_data/             # 测试数据
-├── utils/                      # 工具脚本
-├── openai_api.py              # API服务
-├── word_similarity.py         # 词语相似度算法
-├── sentence_similarity.py     # 句子相似度算法
-├── BaseOnly.py                # 基础功能实现
-├── search.py                  # 检索中间件
-├── QAexamAgent.py            # 医学知识问答Agent
-├── MedicalAgent.py           # 门诊对话Agent
-├── ClinicalDiagnosisAgent.py # 临床诊断Agent
-└── MedRad.py                 # 主框架
+├── Baichuan-13B-Chat/          # Base model files
+├── text2vec-base-chinese-paraphrase/  # Text embedding model
+├── data/                       # Data folder
+│   └── test_data/             # Test data
+├── utils/                      # Utility scripts
+├── openai_api.py              # API service
+├── word_similarity.py         # Word similarity algorithm
+├── sentence_similarity.py     # Sentence similarity algorithm
+├── BaseOnly.py                # Basic functionality implementation
+├── search.py                  # Search middleware
+├── QAexamAgent.py            # Medical knowledge Q&A Agent
+├── MedicalAgent.py           # Outpatient dialogue Agent
+├── ClinicalDiagnosisAgent.py # Clinical diagnosis Agent
+└── MedRad.py                 # Main framework
 ```
 
-## 🤝 贡献指南
+## 🤝 Contributing
 
-欢迎加入我们的开发团队！如果您有任何想法或改进建议，请随时提交Issue或Pull Request。
+Welcome to join our development team! If you have any ideas or suggestions for improvement, please feel free to submit an Issue or Pull Request.
 
-## 📝 致谢
+## 📝 Acknowledgments
 
-- 代码开发：未公开
-- 数据支持：未公开
+- Code Development: Not disclosed
+- Data Support: Not disclosed
 
 ---
 
 <div align="center">
-  <p>让AI为医疗决策保驾护航</p>
+  <p>Let AI safeguard medical decision-making</p>
 </div>
